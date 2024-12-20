@@ -1,0 +1,328 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Section */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #5F9EA0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+
+
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    font-family: Audiowide;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+/* Header Title and Search Bar */
+header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Tools Section */
+.tools-section {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.tools-section h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* Tool Card */
+.tool-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    margin-bottom: 20px;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+}
+
+.tool-card i {
+    font-size: 30px;
+    color: #5F9EA0;
+    margin-bottom: 10px;
+}
+
+.tool-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.tool-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Footer */
+/* Testimonials Section */
+.testimonials-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.testimonial {
+    min-width: 250px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    color: #333;
+    font-size: 16px;
+    text-align: left;
+}
+
+.testimonial p {
+    font-style: italic;
+}
+
+.testimonial span {
+    display: block;
+    margin-top: 10px;
+    color: #666;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.accordion {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.accordion-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.accordion-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #5F9EA0;
+    color: white;
+    font-size: 16px;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.accordion-content {
+    padding: 10px 15px;
+    display: none;
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+/* Fun Facts Section */
+.fun-facts-section {
+    padding: 50px 20px;
+    background-color: #e9f7f7;
+    text-align: center;
+}
+
+.fun-facts {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.fact {
+    text-align: center;
+    font-size: 20px;
+}
+
+.counter {
+    font-size: 32px;
+    font-weight: bold;
+    color: #5F9EA0;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #2C3E50;
+    color: #ecf0f1;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 220px;
+}
+
+.footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #f1c40f;
+}
+
+.footer-column p,
+.footer-column ul {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin: 5px 0;
+}
+
+.footer-column ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #f1c40f;
+}
+
+.contact-column ul li {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.contact-info a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.social-links a {
+    color: #ecf0f1;
+    font-size: 1.2rem;
+    margin: 0 8px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #f1c40f;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #bdc3c7;
+}
+
+.tool-link {
+    text-decoration: none;
+    color: inherit;
+    /* Optional: makes the link inherit the color from the parent element */
+}
+
+.tool-link:hover {
+    color: #0073e6;
+    /* Optional: Adds a hover color for better UX */
+}

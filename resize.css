@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.upload-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.upload-section input[type="file"] {
+    margin-right: 10px;
+}
+
+.upload-section button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-section button:disabled {
+    background-color: #ccc;
+}
+
+.image-preview {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.resize-options {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resize-options input {
+    padding: 5px;
+    margin: 10px;
+    width: 80px;
+}
+
+.resized-image {
+    text-align: center;
+}
+
+.resized-image img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+}

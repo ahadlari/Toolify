@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compression and Crop Tool</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Input and button styles */
+        input[type="file"],
+        input[type="number"],
+        input[type="range"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .preview-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .preview-container img {
+            max-width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .crop-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .crop-options label {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .crop-options select, .crop-options input[type="range"] {
+            width: 48%;
+        }
+
+        .download-container {
+            margin-top: 30px;
+        }
+
+        .download-container a {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-container a:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 600px) {
+            .crop-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .crop-options select,
+            .crop-options input[type="range"] {
+                width: 100%;
+            }
+
+            .download-container {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Image Compression & Crop Tool</h2>
+        
+        <!-- Image Upload Section -->
+        <input type="file" id="imageInput" accept="image/*">
+        <input type="number" id="compressionWidth" placeholder="Enter width for compression (optional)">
+        <label for="compressionPercentage">Compression Percentage (1-100%):</label>
+        <input type="range" id="compressionPercentage" min="1" max="100" value="50">
+        <span id="compressionPercentageLabel">50%</span>
+        <button class="btn" id="uploadBtn">Upload Image</button>
+        
+        <!-- Image Preview and Crop Options -->
+        <div class="preview-container" id="previewContainer">
+            <h3>Image Preview</h3>
+            <img id="previewImage" src="" alt="Image Preview">
+            
+            <div class="crop-options">
+                <div>
+                    <label for="aspectRatioSelect">Aspect Ratio:</label>
+                    <select id="aspectRatioSelect">
+                        <option value="1">1:1 (Square)</option>
+                        <option value="16/9">16:9</option>
+                        <option value="4/3">4:3</option>
+                        <option value="3/2">3:2</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="rotateSlider">Rotate Image:</label>
+                    <input type="range" id="rotateSlider" min="-180" max="180" step="1" value="0">
+                </div>
+            </div>
+
+            <button class="btn" id="startCropBtn">Start Cropping</button>
+
+            <div class="download-container">
+                <a id="downloadLink" href="#" download="compressed_image.jpg">Download Processed Image</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas for image compression -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Cropper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.js"></script>
+    <script>
+        let cropper;
+        let originalImage;
+        let compressedImage;
+
+        // Handle image upload
+        document.getElementById('uploadBtn').addEventListener('click', function () {
+            const fileInput = document.getElementById('imageInput');
+            const compressionWidth = document.getElementById('compressionWidth').value;
+            const compressionPercentage = document.getElementById('compressionPercentage').value;
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImage = e.target.result;
+                    previewImage(originalImage, compressionWidth, compressionPercentage);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Preview the image and compress it
+        function previewImage(imageSrc, compressionWidth, compressionPercentage) {
+            const img = new Image();
+            img.onload = function() {
+                // Compress image
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+                const width = compressionWidth ? parseInt(compressionWidth) : img.width;
+                const scale = width / img.width;
+
+                // Resize the canvas to the desired width
+                canvas.width = width;
+                canvas.height = img.height * scale;
+
+                // Draw the image to the canvas with the new width
+                ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
+
+                // Compress image based on the percentage slider
+                compressedImage = canvas.toDataURL('image/jpeg', compressionPercentage / 100);
+                document.getElementById('previewImage').src = compressedImage;
+
+                // Show the preview container and allow cropping
+                document.getElementById('previewContainer').style.display = 'block';
+            };
+            img.src = imageSrc;
+        }
+
+        // Start cropping the image using Cropper.js
+        document.getElementById('startCropBtn').addEventListener('click', function() {
+            const previewImage = document.getElementById('previewImage');
+            
+            // Initialize Cropper.js
+            cropper = new Cropper(previewImage, {
+                aspectRatio: 1,  // Default 1:1 aspect ratio
+                viewMode: 1,
+                ready() {
+                    console.log("Cropper is ready!");
+                }
+            });
+        });
+
+        // Update aspect ratio based on user selection
+        document.getElementById('aspectRatioSelect').addEventListener('change', function() {
+            const selectedRatio = this.value;
+            const [numerator, denominator] = selectedRatio.split('/').map(Number);
+            const aspectRatio = numerator / denominator;
+
+            if (cropper) {
+                cropper.setAspectRatio(aspectRatio);
+            }
+        });
+
+        // Rotate the image based on slider input
+        document.getElementById('rotateSlider').addEventListener('input', function() {
+            const rotation = this.value;
+            if (cropper) {
+                cropper.rotateTo(rotation);
+            }
+        });
+
+        // Handle compression percentage change (show percentage value)
+        document.getElementById('compressionPercentage').addEventListener('input', function() {
+            document.getElementById('compressionPercentageLabel').innerText = this.value + '%';
+        });
+
+        // Download the cropped and compressed image
+        document.getElementById('downloadLink').addEventListener('click', function(event) {
+            const croppedCanvas = cropper.getCroppedCanvas();
+            const croppedImage = croppedCanvas.toDataURL('image/jpeg');
+
+            // Download the image
+            this.href = croppedImage;
+            this.download = 'compressed_cropped_image.jpg';
+        });
+    </script>
+</body>
+</html>

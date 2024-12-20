@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Audio</title>
+  <link rel="stylesheet" href="t-audio.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Text to Audio Converter</h1>
+
+    <!-- Text Input Area -->
+    <textarea id="text-input" rows="4" placeholder="Enter your text here..."></textarea>
+
+    <!-- Buttons for previewing and downloading audio -->
+    <button id="preview-btn" disabled>Preview</button>
+    <button id="download-btn" disabled>Download Audio</button>
+
+    <!-- Audio Player for preview -->
+    <audio id="audio-preview" controls style="display: none;"></audio>
+
+  </div>
+
+  <script src="t-audio.js"></script>
+</body>
+</html>
